@@ -56,10 +56,16 @@ namespace Zoe2PacTool
                     }
                 }
 
+                string outputPath = String.Empty;
+                if (args.Length >= 4)
+                {
+                    outputPath = args[toolActionSwitch == ToolActionSwitches.uf ? 4 : 3];
+                }
+
                 switch (toolActionSwitch)
                 {
                     case ToolActionSwitches.u:
-                        PacUnpack.UnpackFiles(args[2], gameCode);
+                        PacUnpack.UnpackFiles(args[2], gameCode, outputPath);
                         break;
 
                     case ToolActionSwitches.uf:
@@ -69,15 +75,15 @@ namespace Zoe2PacTool
                             Console.ReadLine();
                             Environment.Exit(0);
                         }
-                        PacUnpack.UnpackSingle(args[2], args[3], gameCode);
+                        PacUnpack.UnpackSingle(args[2], args[3], gameCode, outputPath);
                         break;
 
                     case ToolActionSwitches.un:
-                        PacUnpack.UnpackNames(args[2], gameCode);
+                        PacUnpack.UnpackNames(args[2], gameCode, outputPath);
                         break;
 
                     case ToolActionSwitches.r:
-                        PacRepack.RepackFiles(args[2], gameCode);
+                        PacRepack.RepackFiles(args[2], gameCode, outputPath);
                         break;
                 }
 

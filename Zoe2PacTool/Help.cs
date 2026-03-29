@@ -16,10 +16,10 @@
             Console.WriteLine("-r = Repack a folder to a .pac file");
             Console.WriteLine("");
             Console.WriteLine("Examples with MARS game code:");
-            Console.WriteLine("Zoe2PacTool.exe -mars " + "-u" + @" ""atlas_pc_Zlib.pac""");
-            Console.WriteLine("Zoe2PacTool.exe -mars " + "-uf" + @" ""atlas_pc_Zlib.pac""" + @" ""@af01g_17b7b18e.dat"" ");
-            Console.WriteLine("Zoe2PacTool.exe -mars " + "-un" + @" ""atlas_pc_Zlib.pac""");
-            Console.WriteLine("Zoe2PacTool.exe -mars " + "-r" + @" ""_atlas_pc_Zlib.pac"" ");
+            Console.WriteLine("Zoe2PacTool.exe -mars " + "-u" + @" ""atlas_pc_Zlib.pac"" [output directory path]");
+            Console.WriteLine("Zoe2PacTool.exe -mars " + "-uf" + @" ""atlas_pc_Zlib.pac""" + @" ""@af01g_17b7b18e.dat"" [output directory path]");
+            Console.WriteLine("Zoe2PacTool.exe -mars " + "-un" + @" ""atlas_pc_Zlib.pac"" [output file path]");
+            Console.WriteLine("Zoe2PacTool.exe -mars " + "-r" + @" ""_atlas_pc_Zlib.pac"" [output file path]");
             Console.WriteLine("");
             Console.ReadLine();
             Environment.Exit(0);

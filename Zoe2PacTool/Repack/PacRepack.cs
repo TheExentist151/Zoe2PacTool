@@ -7,13 +7,18 @@ namespace Zoe2PacTool.Repack
 {
     internal class PacRepack
     {
-        public static void RepackFiles(string extractDir, GameCodes gameCode)
+        public static void RepackFiles(string extractDir, GameCodes gameCode, string outputPath = "")
         {
+            if (!string.IsNullOrEmpty(outputPath) && Directory.Exists(outputPath))
+            {
+                SharedMethods.ErrorExit($"Provided path ({outputPath}) is a directory");
+            }
+
             Console.WriteLine("Repacking files....");
             Console.WriteLine("");
 
-            var pacName = Path.GetFileName(extractDir).Remove(0, 1);
-            var outPacFile = Path.Combine(Path.GetDirectoryName(extractDir), pacName);
+            var pacName = !string.IsNullOrEmpty(outputPath) ? Path.GetFileName(outputPath) : Path.GetFileName(extractDir).Remove(0, 1);
+            var outPacFile = !string.IsNullOrEmpty(outputPath) ? outputPath : Path.Combine(Path.GetDirectoryName(extractDir), pacName);
 
             if (File.Exists(outPacFile))
             {

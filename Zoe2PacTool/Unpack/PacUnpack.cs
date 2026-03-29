@@ -7,13 +7,18 @@ namespace Zoe2PacTool.Unpack
     internal class PacUnpack
     {
         #region Unpack type '-u'
-        public static void UnpackFiles(string pacFile, GameCodes gameCode)
+        public static void UnpackFiles(string pacFile, GameCodes gameCode, string outputDir = "")
         {
+            if (!string.IsNullOrEmpty(outputDir) && File.Exists(outputDir))
+            {
+                SharedMethods.ErrorExit($"Provided path ({outputDir}) is a file");
+            }
+
             Console.WriteLine("Unpacking files....");
             Console.WriteLine("");
 
             var pacName = Path.GetFileName(pacFile);
-            var extractDir = Path.Combine(Path.GetDirectoryName(pacFile), $"_{pacName}");
+            var extractDir = !string.IsNullOrEmpty(outputDir) ? outputDir : Path.Combine(Path.GetDirectoryName(pacFile), $"_{pacName}");
             SharedMethods.IfFileOrDirExistsDel(extractDir, false);
             Directory.CreateDirectory(extractDir);
 
@@ -76,13 +81,19 @@ namespace Zoe2PacTool.Unpack
 
 
         #region Unpack type '-uf'
-        public static void UnpackSingle(string pacFile, string fileName, GameCodes gameCode)
+        public static void UnpackSingle(string pacFile, string fileName, GameCodes gameCode, string outputPath = "")
         {
+            if (!string.IsNullOrEmpty(outputPath) && File.Exists(outputPath))
+            {
+                SharedMethods.ErrorExit($"Provided path ({outputPath}) is a file");
+            }
+
             Console.WriteLine("Unpacking file....");
             Console.WriteLine("");
 
             var pacName = Path.GetFileName(pacFile);
-            var extractDir = Path.Combine(Path.GetDirectoryName(pacFile), $"_{pacName}");
+            var extractDir = !string.IsNullOrEmpty(outputPath) ? outputPath : 
+                Path.Combine(Path.GetDirectoryName(pacFile), $"_{pacName}");
 
             if (!Directory.Exists(extractDir))
             {
@@ -129,8 +140,13 @@ namespace Zoe2PacTool.Unpack
 
 
         #region Unpack type '-un'
-        public static void UnpackNames(string pacFile, GameCodes gameVersion)
+        public static void UnpackNames(string pacFile, GameCodes gameVersion, string outputPath = "")
         {
+            if (!string.IsNullOrEmpty(outputPath) && Directory.Exists(outputPath))
+            {
+                SharedMethods.ErrorExit($"Provided path ({outputPath}) is a directory");
+            }
+
             Console.WriteLine("Unpacking file....");
             Console.WriteLine("");
 
@@ -143,7 +159,7 @@ namespace Zoe2PacTool.Unpack
                 UnpackMethods.GetHeaderData(pacReader, pacStructure);
                 UnpackMethods.GetDataFromNameTable(pacReader, pacStructure);
 
-                var pacNamesTxtFile = Path.Combine(Path.GetDirectoryName(pacFile), pacName + ".txt");
+                var pacNamesTxtFile = !string.IsNullOrEmpty(outputPath) ? outputPath : Path.Combine(Path.GetDirectoryName(pacFile), pacName + ".txt");
                 SharedMethods.IfFileOrDirExistsDel(pacNamesTxtFile, true);
 
                 using (var pacNamesWriter = new StreamWriter(pacNamesTxtFile, true))
